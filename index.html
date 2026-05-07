@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array JavaScript</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./img/array.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @import "tailwindcss";
+    </style>
+</head>
+
+<body
+    class="relative min-h-screen overflow-x-hidden font-[Outfit,Segoe_UI,Tahoma,Geneva,Verdana,sans-serif] text-[#e5eef7] bg-linear-to-br from-[#091833] via-[#114b5f] to-[#1a936f]">
+    <!-- Círculos decorativos de fondo con desenfoque (efecto de luz ambiental) -->
+    <div class="pointer-events-none absolute -left-10 -top-14 z-0 h-[180px] w-[180px] min-[220px]:h-[220px] min-[220px]:w-[220px] min-[320px]:h-[280px] min-[320px]:w-[280px] rounded-full bg-[#29f2ff] opacity-25 min-[220px]:opacity-35 blur-[70px] min-[320px]:blur-[80px] animate-pulse"></div>
+    <div class="pointer-events-none absolute -right-20 top-[30%] z-0 h-[190px] w-[190px] min-[220px]:h-[230px] min-[220px]:w-[230px] min-[320px]:h-[300px] min-[320px]:w-[300px] rounded-full bg-[#d9ff00] opacity-25 min-[220px]:opacity-35 blur-[70px] min-[320px]:blur-[80px] animate-pulse [animation-delay:1.2s]"></div>
+    <div class="pointer-events-none absolute -bottom-14 min-[320px]:-bottom-20 left-[30%] min-[320px]:left-[35%] z-0 h-[170px] w-[170px] min-[220px]:h-[210px] min-[220px]:w-[210px] min-[320px]:h-[260px] min-[320px]:w-[260px] rounded-full bg-[#00e5a8] opacity-25 min-[220px]:opacity-35 blur-[65px] min-[320px]:blur-[80px] animate-pulse [animation-delay:2s]"></div>
+    <main
+        class="relative z-10 py-2 px-1 min-[180px]:py-2.5 min-[180px]:px-1.5 min-[240px]:py-4 min-[240px]:px-2 min-[320px]:py-6 min-[320px]:px-3 sm:py-12 sm:px-4 md:py-16">
+
+        <h1
+            class="text-center text-[13px] min-[180px]:text-[15px] min-[240px]:text-xl min-[320px]:text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#c6d6a0] mb-2 min-[240px]:mb-3 sm:mb-5 tracking-tight leading-tight wrap-break-word px-1 opacity-100">
+            Diferentes Ejercicios con Array
+        </h1>
+        <p
+            class="mx-auto max-w-4xl text-center text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base md:text-lg font-semibold text-[#b7c6d9] leading-relaxed px-1 min-[240px]:px-1.5 min-[320px]:px-2 mb-5 min-[320px]:mb-6 sm:mb-10 wrap-break-word">
+            Selecciona cada una de las opciones para poder ver diferentes tipos de ejercicios con array para JavaScript:
+        </p>
+
+        <!-- Línea separadora entre el título y la lista de ejercicios -->
+        <hr class="my-4 min-[320px]:my-5 sm:my-8 mx-auto w-full max-w-7xl border-0 border-t-2 border-lime-200/20">
+
+        <!-- Tarjeta principal: contiene el menú con todos los ejercicios disponibles -->
+        <section
+            class="mt-3 min-[320px]:mt-4 sm:mt-6 md:mt-8 mx-auto w-full max-w-5xl rounded-2xl px-2 py-3 min-[200px]:px-2.5 min-[200px]:py-4 min-[240px]:px-3 min-[240px]:py-5 min-[320px]:px-4 min-[320px]:py-6 sm:w-[92%] sm:px-6 sm:py-10 text-[#e5eef7] bg-[rgba(15,23,42,0.84)] border border-lime-200/20 backdrop-blur-sm shadow-[0_4px_20px_rgba(2,8,20,0.45),0_20px_45px_rgba(0,0,0,0.35)] md:w-[70%] md:px-10 md:py-12 lg:w-[60%]">
+            <h2
+                class="font-semibold text-sm min-[240px]:text-base min-[320px]:text-lg sm:text-2xl md:text-3xl text-[#c6d6a0] tracking-[0.01em] mb-4 sm:mb-6 wrap-break-word">
+                Elige un programa
+            </h2>
+            <!-- Lista ordenada: cada elemento lleva a un ejercicio distinto con arrays -->
+            <ol class="list-decimal list-inside space-y-2.5 min-[320px]:space-y-3 sm:space-y-5">
+                <li
+                    class="italic text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base text-[#c8d7e8] font-medium wrap-break-word">
+                    <a href="mes.html" class="inline-block w-full min-[240px]:w-auto text-center rounded-full px-[0.6rem] min-[240px]:px-[0.7rem] py-[0.3rem] min-[240px]:py-[0.34rem] text-[#e5eef7] bg-lime-200/10 border border-transparent transition duration-200 hover:translate-x-0.5 hover:bg-lime-200/20 hover:border-lime-200/50 hover:text-[#f7ffd3] no-underline">
+                        Mes
+                    </a>
+                </li>
+                <li
+                    class="italic text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base text-[#c8d7e8] font-medium wrap-break-word">
+                    <a href="concurso.html" class="inline-block w-full min-[240px]:w-auto text-center rounded-full px-[0.6rem] min-[240px]:px-[0.7rem] py-[0.3rem] min-[240px]:py-[0.34rem] text-[#e5eef7] bg-lime-200/10 border border-transparent transition duration-200 hover:translate-x-0.5 hover:bg-lime-200/20 hover:border-lime-200/50 hover:text-[#f7ffd3] no-underline">
+                        Concurso
+                    </a>
+                </li>
+                <li
+                    class="italic text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base text-[#c8d7e8] font-medium wrap-break-word">
+                    <a href="lista.html" class="inline-block w-full min-[240px]:w-auto text-center rounded-full px-[0.6rem] min-[240px]:px-[0.7rem] py-[0.3rem] min-[240px]:py-[0.34rem] text-[#e5eef7] bg-lime-200/10 border border-transparent transition duration-200 hover:translate-x-0.5 hover:bg-lime-200/20 hover:border-lime-200/50 hover:text-[#f7ffd3] no-underline">
+                        Lista de compras
+                    </a>
+                </li>
+                <li
+                    class="italic text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base text-[#c8d7e8] font-medium wrap-break-word">
+                    <a href="tarea.html" class="inline-block w-full min-[240px]:w-auto text-center rounded-full px-[0.6rem] min-[240px]:px-[0.7rem] py-[0.3rem] min-[240px]:py-[0.34rem] text-[#e5eef7] bg-lime-200/10 border border-transparent transition duration-200 hover:translate-x-0.5 hover:bg-lime-200/20 hover:border-lime-200/50 hover:text-[#f7ffd3] no-underline">
+                        Tareas
+                    </a>
+                </li>
+                <li
+                    class="italic text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base text-[#c8d7e8] font-medium wrap-break-word">
+                    <a href="sistema.html" class="inline-block w-full min-[240px]:w-auto text-center rounded-full px-[0.6rem] min-[240px]:px-[0.7rem] py-[0.3rem] min-[240px]:py-[0.34rem] text-[#e5eef7] bg-lime-200/10 border border-transparent transition duration-200 hover:translate-x-0.5 hover:bg-lime-200/20 hover:border-lime-200/50 hover:text-[#f7ffd3] no-underline">
+                        Sistema solar
+                    </a>
+                </li>
+                <li
+                    class="italic text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base text-[#c8d7e8] font-medium wrap-break-word">
+                    <a href="tres.html" class="inline-block w-full min-[240px]:w-auto text-center rounded-full px-[0.6rem] min-[240px]:px-[0.7rem] py-[0.3rem] min-[240px]:py-[0.34rem] text-[#e5eef7] bg-lime-200/10 border border-transparent transition duration-200 hover:translate-x-0.5 hover:bg-lime-200/20 hover:border-lime-200/50 hover:text-[#f7ffd3] no-underline">
+                        Tres en raya
+                    </a>
+                </li>
+            </ol>
+        </section>
+    </main>
+</body>
+
+</html>

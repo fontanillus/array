@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tres en raya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="shortcut icon" href="./img/tictactoe.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @import "tailwindcss";
+    </style>
+</head>
+
+<body
+    class="relative min-h-screen overflow-x-hidden font-[Outfit,Segoe_UI,Tahoma,Geneva,Verdana,sans-serif] text-[#e5eef7] bg-linear-to-br from-[#091833] via-[#114b5f] to-[#1a936f]">
+
+    <!-- Círculos decorativos de fondo (no son interactivos, solo estética) -->
+    <div
+        class="pointer-events-none absolute -left-10 -top-14 z-0 h-[180px] w-[180px] min-[220px]:h-[220px] min-[220px]:w-[220px] min-[320px]:h-[280px] min-[320px]:w-[280px] rounded-full bg-[#29f2ff] opacity-25 min-[220px]:opacity-35 blur-[70px] min-[320px]:blur-[80px] motion-safe:animate-pulse motion-reduce:animate-none">
+    </div>
+    <div
+        class="pointer-events-none absolute -right-20 top-[30%] z-0 h-[190px] w-[190px] min-[220px]:h-[230px] min-[220px]:w-[230px] min-[320px]:h-[300px] min-[320px]:w-[300px] rounded-full bg-[#d9ff00] opacity-25 min-[220px]:opacity-35 blur-[70px] min-[320px]:blur-[80px] motion-safe:animate-pulse motion-reduce:animate-none [animation-delay:1.2s]">
+    </div>
+    <div class="pointer-events-none absolute -bottom-14 min-[320px]:-bottom-20 left-[30%] min-[320px]:left-[35%] z-0 h-[170px] w-[170px] min-[220px]:h-[210px] min-[220px]:w-[210px] min-[320px]:h-[260px] min-[320px]:w-[260px] rounded-full bg-[#00e5a8] opacity-25 min-[220px]:opacity-35 blur-[65px] min-[320px]:blur-[80px] motion-safe:animate-pulse motion-reduce:animate-none [animation-delay:2s]"></div>
+
+    <main class="relative z-10 py-3 px-2 min-[180px]:py-4 min-[180px]:px-2.5 min-[320px]:py-6 min-[320px]:px-3 sm:py-12 sm:px-4 md:py-16">
+        <h1
+            class="text-center text-[14px] min-[180px]:text-lg min-[240px]:text-xl min-[320px]:text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#c6d6a0] mb-3 sm:mb-5 tracking-tight leading-tight px-1">
+            Tres en raya
+        </h1>
+        <!-- Mensaje de estado: muestra de quién es el turno, quién ganó o si hubo empate -->
+        <p id="mensaje"
+            class="mx-auto max-w-4xl text-center text-sm min-[240px]:text-base min-[320px]:text-lg sm:text-2xl font-semibold text-[#b7c6d9] leading-relaxed px-1 mb-5 sm:mb-8">
+            Turno de X
+        </p>
+
+        <!-- Botones de navegación y reinicio de partida -->
+        <div class="flex flex-wrap justify-center gap-2 min-[320px]:gap-3 mb-5 sm:mb-8">
+            <a href="index.html"
+                class="rounded-full px-3 min-[240px]:px-4 py-1.5 min-[240px]:py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] bg-lime-200/10 border border-lime-200/30 transition duration-200 hover:bg-lime-200/25 hover:border-lime-200/60 hover:text-[#f7ffd3] cursor-pointer no-underline">
+                Volver a inicio
+            </a>
+            <button id="reiniciar"
+                class="rounded-full px-3 min-[240px]:px-4 py-1.5 min-[240px]:py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] bg-red-400/10 border border-red-400/30 transition duration-200 hover:bg-red-400/25 hover:border-red-400/60 hover:text-red-200 cursor-pointer">
+                Reiniciar
+            </button>
+        </div>
+
+        <!-- Tablero del juego: cuadrícula 3x3, cada botón es una casilla jugable -->
+        <section
+            class="mx-auto w-full max-w-md rounded-2xl px-3 py-4 min-[240px]:px-4 min-[240px]:py-5 sm:px-6 sm:py-7 bg-[rgba(15,23,42,0.84)] border border-lime-200/20 backdrop-blur-sm shadow-[0_4px_20px_rgba(2,8,20,0.45),0_20px_45px_rgba(0,0,0,0.35)]">
+            <!-- id="tablero" permite que JS seleccione las casillas con querySelectorAll(".casilla") -->
+            <div id="tablero" class="grid grid-cols-3 gap-1.5 min-[220px]:gap-2 sm:gap-3">
+                <button type="button" aria-label="Casilla 1" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+                <button type="button" aria-label="Casilla 2" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+                <button type="button" aria-label="Casilla 3" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+                <button type="button" aria-label="Casilla 4" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+                <button type="button" aria-label="Casilla 5" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+                <button type="button" aria-label="Casilla 6" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+                <button type="button" aria-label="Casilla 7" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+                <button type="button" aria-label="Casilla 8" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+                <button type="button" aria-label="Casilla 9" class="casilla aspect-square rounded-xl bg-lime-200/10 border border-lime-200/30 text-2xl min-[220px]:text-3xl min-[320px]:text-4xl sm:text-5xl font-extrabold text-[#c6d6a0] transition duration-200 hover:bg-lime-200/20 hover:border-lime-200/60"></button>
+            </div>
+        </section>
+    </main>
+
+    <script src="./js/tres.js"></script>
+</body>
+
+</html>

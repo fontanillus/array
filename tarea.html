@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./img/tareas.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @import "tailwindcss";
+    </style>
+    <title>Tareas</title>
+</head>
+
+<body
+    class="relative min-h-screen overflow-x-hidden font-[Outfit,Segoe_UI,Tahoma,Geneva,Verdana,sans-serif] text-[#e5eef7] bg-linear-to-br from-[#091833] via-[#114b5f] to-[#1a936f]">
+    <div class="pointer-events-none absolute -left-10 -top-14 z-0 h-[180px] w-[180px] min-[220px]:h-[220px] min-[220px]:w-[220px] min-[320px]:h-[280px] min-[320px]:w-[280px] rounded-full bg-[#29f2ff] opacity-25 min-[220px]:opacity-35 blur-[70px] min-[320px]:blur-[80px] motion-safe:animate-pulse motion-reduce:animate-none"></div>
+    <div class="pointer-events-none absolute -right-20 top-[30%] z-0 h-[190px] w-[190px] min-[220px]:h-[230px] min-[220px]:w-[230px] min-[320px]:h-[300px] min-[320px]:w-[300px] rounded-full bg-[#d9ff00] opacity-25 min-[220px]:opacity-35 blur-[70px] min-[320px]:blur-[80px] motion-safe:animate-pulse motion-reduce:animate-none [animation-delay:1.2s]"></div>
+    <div class="pointer-events-none absolute -bottom-14 min-[320px]:-bottom-20 left-[30%] min-[320px]:left-[35%] z-0 h-[170px] w-[170px] min-[220px]:h-[210px] min-[220px]:w-[210px] min-[320px]:h-[260px] min-[320px]:w-[260px] rounded-full bg-[#00e5a8] opacity-25 min-[220px]:opacity-35 blur-[65px] min-[320px]:blur-[80px] motion-safe:animate-pulse motion-reduce:animate-none [animation-delay:2s]"></div>
+
+    <main class="relative z-10 py-3 px-2 min-[180px]:py-4 min-[180px]:px-2.5 min-[320px]:py-6 min-[320px]:px-3 sm:py-12 sm:px-4 md:py-16">
+        <h1 class="text-center text-[14px] min-[180px]:text-lg min-[240px]:text-xl min-[320px]:text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#c6d6a0] mb-3 sm:mb-5 tracking-tight leading-tight px-1">
+            Gestor de Tareas
+        </h1>
+        <p class="mx-auto max-w-4xl text-center text-[10px] min-[180px]:text-[11px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base md:text-lg font-semibold text-[#b7c6d9] leading-relaxed px-1 min-[240px]:px-2 mb-6 min-[320px]:mb-8 sm:mb-10">
+            Usa el menu para anadir, listar y eliminar tareas. Si sales, el sistema mostrara Gracias.
+        </p>
+
+        <section class="mt-3 min-[320px]:mt-4 mx-auto w-full max-w-5xl rounded-2xl px-2 py-4 min-[180px]:px-3 min-[240px]:px-4 min-[240px]:py-5 sm:px-7 sm:py-10 text-[#e5eef7] bg-[rgba(15,23,42,0.84)] border border-lime-200/20 backdrop-blur-sm shadow-[0_4px_20px_rgba(2,8,20,0.45),0_20px_45px_rgba(0,0,0,0.35)]">
+            <div class="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-3 min-[240px]:p-4 sm:p-5">
+                    <h2 class="font-semibold text-sm min-[240px]:text-base min-[320px]:text-lg sm:text-2xl text-[#c6d6a0] tracking-[0.01em] mb-4 min-[320px]:mb-5">
+                        Menu de tareas
+                    </h2>
+
+                    <div class="flex flex-col gap-3">
+                        <input id="inputTarea" type="text" placeholder="Nueva tarea"
+                            class="w-full rounded-full px-3 min-[240px]:px-4 py-2 text-sm min-[320px]:text-base bg-white/10 border border-white/20 text-[#e5eef7] placeholder:text-[#9fb0c5] outline-none focus:border-lime-200/60 focus:ring-2 focus:ring-lime-200/20">
+
+                        <input id="inputEliminar" type="number" min="1" placeholder="Numero de tarea a eliminar"
+                            class="w-full rounded-full px-3 min-[240px]:px-4 py-2 text-sm min-[320px]:text-base bg-white/10 border border-white/20 text-[#e5eef7] placeholder:text-[#9fb0c5] outline-none focus:border-amber-200/60 focus:ring-2 focus:ring-amber-200/20">
+
+                        <div class="grid gap-3 sm:grid-cols-2">
+                            <button id="btnAnadir" type="button"
+                                class="menu-btn inline-block w-full text-center rounded-full px-3 min-[240px]:px-4 py-2 text-[10px] min-[240px]:text-sm min-[320px]:text-base leading-tight text-[#e5eef7] bg-lime-200/10 border border-transparent transition duration-200 hover:translate-x-0.5 hover:bg-lime-200/20 hover:border-lime-200/50 hover:text-[#f7ffd3] font-semibold">
+                                Anadir tarea
+                            </button>
+                            <button id="btnMostrar" type="button"
+                                class="menu-btn inline-block w-full text-center rounded-full px-3 min-[240px]:px-4 py-2 text-[10px] min-[240px]:text-sm min-[320px]:text-base leading-tight text-[#e5eef7] bg-cyan-200/10 border border-transparent transition duration-200 hover:bg-cyan-200/20 hover:border-cyan-200/50 hover:text-[#d5fcff] font-semibold">
+                                Mostrar todas las tareas
+                            </button>
+                            <button id="btnEliminar" type="button"
+                                class="menu-btn inline-block w-full text-center rounded-full px-3 min-[240px]:px-4 py-2 text-[10px] min-[240px]:text-sm min-[320px]:text-base leading-tight text-[#e5eef7] bg-amber-200/10 border border-transparent transition duration-200 hover:bg-amber-200/20 hover:border-amber-200/50 hover:text-[#fff1c2] font-semibold">
+                                Eliminar tarea
+                            </button>
+                            <button id="btnSalir" type="button"
+                                class="menu-btn inline-block w-full text-center rounded-full px-3 min-[240px]:px-4 py-2 text-[10px] min-[240px]:text-sm min-[320px]:text-base leading-tight text-[#e5eef7] bg-rose-200/10 border border-transparent transition duration-200 hover:bg-rose-200/20 hover:border-rose-200/50 hover:text-[#ffe1e8] font-semibold">
+                                Salir de la aplicacion
+                            </button>
+                        </div>
+                    </div>
+
+                    <p id="mensaje" class="mt-4 min-[320px]:mt-5 text-sm min-[320px]:text-base font-semibold text-[#c8d7e8]">&nbsp;</p>
+                </div>
+
+                <aside class="rounded-2xl border border-white/10 bg-white/5 p-3 min-[240px]:p-4 sm:p-5">
+                    <h2 class="font-semibold text-sm min-[240px]:text-base min-[320px]:text-lg sm:text-2xl text-[#c6d6a0] tracking-[0.01em] mb-4 min-[320px]:mb-5">
+                        Tareas por hacer
+                    </h2>
+                    <ol id="listaTareas" class="list-decimal list-inside space-y-2 text-[10px] min-[180px]:text-[11px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base text-[#c8d7e8]"></ol>
+                    <a href="index.html"
+                        class="mt-4 inline-block w-full text-center rounded-full px-4 py-2 text-[#e5eef7] bg-white/10 border border-transparent transition duration-200 hover:bg-white/20 hover:border-white/40 no-underline font-semibold">
+                        Volver al inicio
+                    </a>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <script src="./js/tarea.js"></script>
+</body>
+
+</html>
