@@ -3,6 +3,20 @@ const contenedorAstros = document.getElementById("astros");
 const imagenPlaneta = document.getElementById("planeta");
 const botonTerminar = document.getElementById("btnTerminar");
 
+// ===== INICIO REQUISITO ENUNCIADO: for-of + console.log =====
+// Toma los nombres de los astros en la interfaz y los muestra por consola con for-of.
+function mostrarAstrosEnConsola() {
+    if (!contenedorAstros) {
+        return;
+    }
+
+    const listaAstros = contenedorAstros.querySelectorAll(".astro-item");
+    for (const astro of listaAstros) {
+        console.log(astro.textContent.trim());
+    }
+}
+// ===== FIN REQUISITO ENUNCIADO: for-of + console.log =====
+
 // Actualiza la imagen del planeta y resalta el elemento activo en la lista.
 function mostrarAstro(src, item) {
     if (!imagenPlaneta || !contenedorAstros || !src) {
@@ -28,6 +42,9 @@ function terminar() {
 // Delegación de eventos: un solo listener en el contenedor escucha los clicks
 // de todos los items hijos, en lugar de asignar un listener a cada uno.
 if (contenedorAstros) {
+    // Punto donde se ejecuta el requisito al cargar la vista.
+    mostrarAstrosEnConsola();
+
     contenedorAstros.addEventListener("click", function (evento) {
         // closest(".astro-item") sube por el DOM hasta encontrar el item clicado.
         const item = evento.target.closest(".astro-item");

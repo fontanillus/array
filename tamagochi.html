@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tamagotchi JavaScript</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="./img/minomi.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @import "tailwindcss";
+    </style>
+</head>
+
+<body
+    class="relative min-h-screen overflow-x-hidden font-[Outfit,Segoe_UI,Tahoma,Geneva,Verdana,sans-serif] text-[#e5eef7] bg-linear-to-br from-[#091833] via-[#114b5f] to-[#1a936f]">
+    <div class="pointer-events-none absolute -left-10 -top-14 z-0 h-[180px] w-[180px] min-[220px]:h-[220px] min-[220px]:w-[220px] min-[320px]:h-[280px] min-[320px]:w-[280px] rounded-full bg-[#29f2ff] opacity-25 min-[220px]:opacity-35 blur-[70px] min-[320px]:blur-[80px] animate-pulse"></div>
+    <div class="pointer-events-none absolute -right-20 top-[30%] z-0 h-[190px] w-[190px] min-[220px]:h-[230px] min-[220px]:w-[230px] min-[320px]:h-[300px] min-[320px]:w-[300px] rounded-full bg-[#d9ff00] opacity-25 min-[220px]:opacity-35 blur-[70px] min-[320px]:blur-[80px] animate-pulse [animation-delay:1.2s]"></div>
+    <div class="pointer-events-none absolute -bottom-14 left-[30%] z-0 h-[170px] w-[170px] min-[220px]:h-[210px] min-[220px]:w-[210px] min-[320px]:h-[260px] min-[320px]:w-[260px] rounded-full bg-[#00e5a8] opacity-25 min-[220px]:opacity-35 blur-[65px] min-[320px]:blur-[80px] animate-pulse [animation-delay:2s]"></div>
+
+    <main class="relative z-10 mx-auto w-full max-w-5xl px-2 py-3 min-[180px]:px-2.5 min-[180px]:py-4 min-[240px]:px-3 min-[240px]:py-5 min-[320px]:px-4 min-[320px]:py-7 sm:px-6 sm:py-10">
+        <h1 class="text-center text-[14px] min-[180px]:text-[15px] min-[240px]:text-lg min-[320px]:text-2xl sm:text-4xl font-extrabold text-[#c6d6a0] tracking-tight leading-tight">
+            Cuida de tu Tamagotchi
+        </h1>
+        <p class="mx-auto mt-2 max-w-2xl text-center text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs min-[320px]:text-sm sm:text-base text-[#b7c6d9]">
+            Presiona boton jugar para ver a Minomi, tu nueva mascota virtual.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-2 min-[320px]:gap-3 mt-4 min-[320px]:mt-6">
+            <a href="index.html"
+                class="rounded-full px-3 min-[240px]:px-4 py-1.5 min-[240px]:py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] bg-lime-200/10 border border-lime-200/30 transition duration-200 hover:bg-lime-200/25 hover:border-lime-200/60 hover:text-[#f7ffd3] no-underline">
+                Volver a inicio
+            </a>
+            <button onclick="crearTamagotchi()"
+                class="rounded-full px-3 min-[240px]:px-4 py-1.5 min-[240px]:py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#0f172a] bg-[#c6d6a0] border border-[#c6d6a0]/60 transition duration-200 hover:bg-[#d8e7b5] hover:border-[#d8e7b5]">
+                Jugar
+            </button>
+            <button onclick="reiniciar()"
+                class="rounded-full px-3 min-[240px]:px-4 py-1.5 min-[240px]:py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] bg-red-400/10 border border-red-400/30 transition duration-200 hover:bg-red-400/25 hover:border-red-400/60 hover:text-red-200">
+                Reiniciar
+            </button>
+        </div>
+
+        <hr class="my-3 min-[320px]:my-4 sm:my-6 mx-auto w-full border-0 border-t-2 border-lime-200/20">
+
+        <p id="mensaje" class="text-center min-h-5 text-sm min-[320px]:text-base sm:text-lg font-extrabold text-[#c6d6a0]"></p>
+
+        <section id="infoMascota" class="hidden mt-4 min-[320px]:mt-6 rounded-2xl border border-lime-200/20 bg-[rgba(15,23,42,0.84)] p-2.5 min-[220px]:p-3 min-[320px]:p-4 sm:p-6 backdrop-blur-sm shadow-[0_4px_20px_rgba(2,8,20,0.45),0_20px_45px_rgba(0,0,0,0.35)]">
+            <h2 id="nombreMascota" class="hidden text-center text-[12px] min-[180px]:text-[13px] min-[240px]:text-base min-[320px]:text-xl sm:text-2xl font-extrabold text-[#c6d6a0]"></h2>
+
+            <div id="contenedorMascota" class="mt-3 grid grid-cols-1 min-[460px]:grid-cols-[minmax(0,220px)_1fr] gap-3 min-[320px]:gap-4">
+                <aside id="imagenMascota" class="hidden w-full h-52 min-[320px]:h-64 sm:h-80 flex items-center justify-center overflow-hidden rounded-2xl border border-cyan-200/20 bg-slate-900/60"></aside>
+
+                <main id="estado" class="grid grid-cols-1 min-[280px]:grid-cols-2 gap-2 min-[320px]:gap-3">
+                    <p id="personalidad" class="col-span-2 rounded-xl border border-lime-200/20 bg-slate-950/35 px-2.5 py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm italic text-[#c6d6a0]"></p>
+                    <p class="rounded-xl border border-cyan-200/20 bg-slate-950/35 px-2.5 py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold">Salud: <span id="salud"></span> (<span id="valorSalud">0</span>)</p>
+                    <p class="rounded-xl border border-cyan-200/20 bg-slate-950/35 px-2.5 py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold">Felicidad: <span id="textoFelicidad"></span> (<span id="valorFelicidad">0</span>)</p>
+                    <p class="rounded-xl border border-cyan-200/20 bg-slate-950/35 px-2.5 py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold">Limpieza: <span id="textoLimpieza"></span> (<span id="valorLimpieza">0</span>)</p>
+                    <p class="rounded-xl border border-cyan-200/20 bg-slate-950/35 px-2.5 py-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold">Energía: <span id="textoEnergia"></span> (<span id="valorEnergia">0</span>)</p>
+                </main>
+            </div>
+        </section>
+
+        <section id="actividades" class="hidden mt-4 min-[320px]:mt-6 rounded-2xl border border-lime-200/20 bg-[rgba(15,23,42,0.84)] p-2.5 min-[220px]:p-3 min-[320px]:p-4 sm:p-6 backdrop-blur-sm shadow-[0_4px_20px_rgba(2,8,20,0.45),0_20px_45px_rgba(0,0,0,0.35)]">
+            <h3 class="text-[12px] min-[240px]:text-sm min-[320px]:text-lg font-bold text-[#c6d6a0]">Actividades</h3>
+            <div class="mt-3 grid grid-cols-2 min-[390px]:grid-cols-3 gap-2 min-[320px]:gap-3">
+                <button onclick="alimentar()" class="h-10 min-[180px]:h-9 min-[320px]:h-10 rounded-xl px-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] border border-cyan-200/35 bg-cyan-300/10 hover:bg-cyan-200/20 transition-colors"><span class="text-base">🍎</span> Alimentar</button>
+                <button onclick="jugar()" class="h-10 min-[180px]:h-9 min-[320px]:h-10 rounded-xl px-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] border border-cyan-200/35 bg-cyan-300/10 hover:bg-cyan-200/20 transition-colors"><span class="text-base">🎾</span> Jugar</button>
+                <button onclick="dormir()" class="h-10 min-[180px]:h-9 min-[320px]:h-10 rounded-xl px-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] border border-cyan-200/35 bg-cyan-300/10 hover:bg-cyan-200/20 transition-colors"><span class="text-base">😴</span> Dormir</button>
+                <button onclick="duchar()" class="h-10 min-[180px]:h-9 min-[320px]:h-10 rounded-xl px-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] border border-cyan-200/35 bg-cyan-300/10 hover:bg-cyan-200/20 transition-colors"><span class="text-base">🛁</span> Duchar</button>
+                <button onclick="reprender()" class="h-10 min-[180px]:h-9 min-[320px]:h-10 rounded-xl px-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] border border-cyan-200/35 bg-cyan-300/10 hover:bg-cyan-200/20 transition-colors"><span class="text-base">📛</span> Reprender</button>
+                <button onclick="acariciar()" class="h-10 min-[180px]:h-9 min-[320px]:h-10 rounded-xl px-2 text-[10px] min-[240px]:text-xs min-[320px]:text-sm font-semibold text-[#e5eef7] border border-cyan-200/35 bg-cyan-300/10 hover:bg-cyan-200/20 transition-colors"><span class="text-base">💖</span> Acariciar</button>
+            </div>
+        </section>
+
+        <p class="mt-4 text-center text-[9px] min-[180px]:text-[10px] min-[240px]:text-xs text-[#c8d7e8]">Consejo: en pantallas pequeñas gira el reloj/móvil para ver más botones por fila.</p>
+    </main>
+
+    <script src="./js/tamagochi.js"></script>
+</body>
+
+</html>

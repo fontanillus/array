@@ -38,15 +38,20 @@ function setChartValues(frio, tibio, caliente) {
 // Cambia el fondo segun el estado para reforzar la pista visual.
 function setEscenario(estado) {
     const escenario = document.getElementById('escenario');
+    const body = document.body;
 
     // Colores del enunciado: frio=azul, tibio=amarillo, caliente=rojo.
     if (estado === 'frio') {
+        body.style.backgroundColor = '#1e40af';
         escenario.style.backgroundImage = "linear-gradient(145deg, #0a1f44, #1e40af), radial-gradient(circle at 18% 20%, rgba(56,189,248,0.35), transparent 45%)";
     } else if (estado === 'tibio') {
+        body.style.backgroundColor = '#facc15';
         escenario.style.backgroundImage = "linear-gradient(145deg, #422006, #92400e), radial-gradient(circle at 22% 20%, rgba(251,191,36,0.45), transparent 45%)";
     } else if (estado === 'caliente') {
+        body.style.backgroundColor = '#dc2626';
         escenario.style.backgroundImage = "linear-gradient(145deg, #3b0a0a, #991b1b), radial-gradient(circle at 24% 20%, rgba(239,68,68,0.45), transparent 45%)";
     } else if (estado === 'ganaste') {
+        body.style.backgroundColor = '#1a936f';
         escenario.style.backgroundImage = [
             "radial-gradient(circle at 20% 25%, rgba(250,204,21,0.75), transparent 38%)",
             "radial-gradient(circle at 78% 20%, rgba(52,211,153,0.7), transparent 38%)",
@@ -57,6 +62,7 @@ function setEscenario(estado) {
         ].join(", ");
     } else {
         // Estado 'inicio': fondo por defecto al reiniciar
+        body.style.backgroundColor = '';
         escenario.style.backgroundImage = "";
     }
 }
@@ -132,12 +138,6 @@ function adivinar() {
         estadoActual.textContent = 'Caliente, caliente';
         setChartValues(16, 44, 92);
         setEscenario('caliente');
-    }
-
-    if (numero > numeroSecreto) {
-        mensaje += ' Tu numero es mayor al secreto.';
-    } else {
-        mensaje += ' Tu numero es menor al secreto.';
     }
 
     resultado.textContent = mensaje;
