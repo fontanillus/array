@@ -1,5 +1,7 @@
+// Array principal: guarda los productos que el usuario va agregando al carrito.
 let carrito = [];
 
+// Referencias a los elementos del HTML que se usan en el código.
 const INPUT = document.getElementById("producto-input");
 const LISTA = document.getElementById("lista-compras");
 const PRODUCTOS = document.getElementById("num-prod");
@@ -9,9 +11,12 @@ const BOTON_AGREGAR = document.getElementById("btnAgregar");
 const BOTON_ELIMINAR = document.getElementById("btnEliminar");
 const BOTON_VACIAR = document.getElementById("btnVaciar");
 
+// Redibuja la lista visual completa leyendo el array carrito.
+// Se llama cada vez que el array cambia.
 function renderizarLista() {
   LISTA.innerHTML = "";
 
+  // forEach recorre el array y crea un <li> por cada producto.
   carrito.forEach(function (producto, indice) {
     const elemento = document.createElement("li");
     elemento.id = String(indice);
@@ -20,11 +25,15 @@ function renderizarLista() {
     LISTA.appendChild(elemento);
   });
 
+  // Actualiza el contador de productos mostrado en el resumen.
   PRODUCTOS.textContent = String(carrito.length);
 }
 
 function agregar() {
+  // trim() quita espacios, toUpperCase() evita duplicados por mayúsculas/minúsculas.
   const producto = INPUT.value.trim().toUpperCase();
+
+  // indexOf devuelve -1 si el producto NO está en el array (no es duplicado).
   const posicionExistente = carrito.indexOf(producto);
 
   if (producto === "") {
@@ -33,12 +42,14 @@ function agregar() {
     return;
   }
 
+  // Si indexOf encontró el producto (posición >= 0), es un duplicado: no lo agregamos.
   if (posicionExistente !== -1) {
     MENSAJE.textContent = "Producto ya añadido a la lista.";
     INPUT.focus();
     return;
   }
 
+  // push() añade el producto al final del array.
   carrito.push(producto);
   renderizarLista();
   MENSAJE.textContent = "Ultimo producto agregado: " + producto;
@@ -57,6 +68,7 @@ function eliminarPorPosicion() {
 
   const entrada = INPUT_POSICION ? INPUT_POSICION.value.trim() : "";
 
+  // El usuario ve posiciones desde 1, pero el array empieza en 0.
   const posicionUsuario = Number(entrada);
   const esEntero = Number.isInteger(posicionUsuario);
 
@@ -68,8 +80,12 @@ function eliminarPorPosicion() {
     return;
   }
 
+  // Convertimos la posición del usuario (1..n) al índice del array (0..n-1).
   const posicionArray = posicionUsuario - 1;
   const productoEliminado = carrito[posicionArray];
+
+  // slice + concat construyen un nuevo array sin el elemento eliminado
+  // (equivale a splice pero sin mutar el array original directamente).
   carrito = carrito.slice(0, posicionArray).concat(carrito.slice(posicionArray + 1));
   renderizarLista();
   MENSAJE.textContent = "Producto eliminado: " + productoEliminado + ".";
@@ -87,6 +103,7 @@ function vaciarCarrito() {
     return;
   }
 
+  // Resetea el array asignándolo vacío: todos los productos desaparecen.
   carrito = [];
   renderizarLista();
   INPUT.value = "";

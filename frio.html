@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frio o caliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS via CDN (versión 4 para browser): genera las clases al vuelo sin necesidad de build -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @import "tailwindcss";
+
+        /* Variables CSS globales: paleta alineada con index.html */
+        :root {
+            --page-900: #091833;
+            --page-700: #114b5f;
+            --page-600: #1a936f;
+            --ink-100: #e5eef7;
+            --title-200: #c6d6a0;
+        }
+
+        /* Animacion de entrada: los elementos aparecen subiendo desde abajo */
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+</head>
+
+<!-- min-h-screen: ocupa al menos toda la pantalla. overflow-x-hidden: evita scroll horizontal en movil -->
+<body class="relative min-h-screen overflow-x-hidden font-[Outfit,Segoe_UI,Tahoma,Geneva,Verdana,sans-serif] text-[var(--ink-100)] bg-[var(--page-900)]">
+    <div class="pointer-events-none absolute -left-10 -top-14 z-0 h-[220px] w-[220px] rounded-full bg-[#29f2ff] opacity-35 blur-[80px] animate-pulse"></div>
+    <div class="pointer-events-none absolute -right-20 top-[30%] z-0 h-[230px] w-[230px] rounded-full bg-[#d9ff00] opacity-35 blur-[80px] animate-pulse [animation-delay:1.2s]"></div>
+    <div class="pointer-events-none absolute -bottom-20 left-[35%] z-0 h-[210px] w-[210px] rounded-full bg-[#00e5a8] opacity-35 blur-[80px] animate-pulse [animation-delay:2s]"></div>
+    <!-- Capa de fondo dinamico: frio.js cambia backgroundImage segun la pista (frio/tibio/caliente/ganaste) -->
+    <div id="escenario"
+        class="fixed inset-0 -z-10 bg-linear-to-br from-[var(--page-900)] via-[var(--page-700)] to-[var(--page-600)] bg-cover bg-center transition-all duration-500">
+    </div>
+    <!-- Rejilla decorativa semitransparente sobre el fondo para dar textura de cuadricula -->
+    <div class="fixed inset-0 -z-10 opacity-20 [background-image:linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:26px_26px]"></div>
+
+    <!-- Contenedor principal: centrado, ancho maximo 6xl, padding responsivo (movil → tablet → escritorio) -->
+    <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+        <!-- Cabecera: boton de vuelta al indice + titulo + descripcion del juego. Animacion rise de 0.6s -->
+        <header class="animate-[rise_0.6s_ease-out]">
+            <a href="index.html"
+                class="inline-flex items-center gap-2 rounded-full border border-lime-200/35 bg-lime-200/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[#e5eef7] transition hover:bg-lime-200/20 hover:border-lime-200/50">Volver
+                al inicio</a>
+            <h1 class="mt-4 text-3xl font-extrabold leading-tight text-[var(--title-200)] sm:text-4xl lg:text-5xl">Adivina el numero secreto</h1>
+            <p class="mt-3 max-w-2xl text-sm text-[#c8d7e8] sm:text-base">Juego frío/caliente: Escribe un numero entre 1 y 500 y recibe pistas de frio, tibio o caliente.</p>
+        </header>
+
+        <!-- Grid de dos columnas en escritorio (1.1fr + 0.9fr), columna unica en movil -->
+        <section class="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+            <!-- Tarjeta izquierda: contiene el formulario de juego, el panel de estado y el contador de intentos -->
+            <article class="rounded-2xl border border-lime-200/20 bg-[rgba(15,23,42,0.84)] p-4 shadow-[0_4px_20px_rgba(2,8,20,0.45),0_20px_45px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-6 animate-[rise_0.8s_ease-out]">
+                <label for="numero" class="text-sm font-semibold text-[#c6d6a0]">Escribe un numero entre 1 y 500</label>
+                <!-- En movil el input y el boton se apilan; en sm se ponen en fila -->
+                <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+                    <!-- Input numerico: min=0 porque el enunciado permite 0, frio.js valida ademas por JS -->
+                    <input type="number" id="numero" min="0" max="500" required
+                        class="w-full rounded-xl border border-lime-200/20 bg-slate-900/70 px-4 py-3 text-base font-semibold text-[#e5eef7] outline-none transition placeholder:text-slate-400 focus:border-lime-200/55 focus:ring-2 focus:ring-lime-200/25"
+                        placeholder="Ejemplo: 237">
+                    <button type="button" id="btnAdivinar" onclick="adivinar()"
+                        class="rounded-xl bg-gradient-to-r from-[#c6d6a0] to-[#d9ff00] px-5 py-3 text-sm font-bold text-[#1b2a19] transition hover:scale-[1.02] hover:brightness-105">
+                        Adivinar
+                    </button>
+                </div>
+
+                <!-- Panel de estado: frio.js escribe en estadoActual (Frio/Tibio/Caliente/Ganaste) y en resultado (mensaje largo) -->
+                <div class="mt-5 rounded-xl border border-lime-200/15 bg-lime-200/5 p-4">
+                    <p class="text-xs font-semibold uppercase tracking-wider text-[#b7c6d9]">Estado actual</p>
+                    <p id="estadoActual" class="mt-2 text-lg font-bold text-[#e5eef7]">Esperando tu primer intento</p>
+                    <p id="resultado" class="mt-2 text-sm leading-relaxed text-[#c8d7e8]"></p>
+                </div>
+
+                <!-- Contador de intentos: frio.js incrementa intentosValor en cada llamada valida a adivinar() -->
+                <div class="mt-4 flex flex-wrap items-center gap-3">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-lime-200/30 bg-lime-200/10 px-3 py-1">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-[#f7ffd3]">Intentos</span>
+                        <span id="intentosValor" class="text-sm font-extrabold text-[#d9ff00]">0</span>
+                    </div>
+                    <!-- Reiniciar: genera un nuevo numero secreto y deja el juego como al inicio -->
+                    <button type="button" onclick="reiniciar()"
+                        class="inline-flex items-center gap-1.5 rounded-full border border-lime-200/30 bg-lime-200/10 px-3 py-1 text-xs font-semibold text-[#e5eef7] transition hover:bg-lime-200/20">
+                        &#8635; Reiniciar juego
+                    </button>
+                </div>
+            </article>
+
+            <!-- Tarjeta derecha: panel Smart Charts. Las tres barras muestran visualmente la pista de cada intento -->
+            <aside class="rounded-2xl border border-lime-200/20 bg-[rgba(15,23,42,0.84)] p-4 shadow-[0_4px_20px_rgba(2,8,20,0.45),0_20px_45px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-6 animate-[rise_1s_ease-out]">
+                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-[#d9ff00]">Smart Charts</p>
+                <h2 class="mt-1 text-xl font-bold text-[var(--title-200)]">Mapa de cercania</h2>
+                <p class="mt-1 text-sm text-[#b7c6d9]">Las barras cambian segun que tan cerca estas del numero secreto.</p>
+
+                <!-- Cada barra tiene: etiqueta + porcentaje (valorX) y un div interior (chartX) cuyo width cambia via JS -->
+                <div class="mt-5 space-y-4">
+                    <!-- Barra Frio: sube cuando la diferencia es >= 50 -->
+                    <article>
+                        <div class="mb-1 flex items-center justify-between text-sm">
+                            <span class="text-[#c8d7e8]">Frio</span>
+                            <span id="valorFrio" class="font-semibold text-[#38bdf8]">0%</span>
+                        </div>
+                        <div class="h-2.5 rounded-full bg-slate-700/75">
+                            <div id="chartFrio" class="h-full w-[0%] rounded-full bg-gradient-to-r from-[#1e40af] to-[#38bdf8] transition-all duration-500"></div>
+                        </div>
+                    </article>
+
+                    <!-- Barra Tibio: sube cuando la diferencia esta entre 15 y 49 -->
+                    <article>
+                        <div class="mb-1 flex items-center justify-between text-sm">
+                            <span class="text-[#c8d7e8]">Tibio</span>
+                            <span id="valorTibio" class="font-semibold text-[#fbbf24]">0%</span>
+                        </div>
+                        <div class="h-2.5 rounded-full bg-slate-700/75">
+                            <div id="chartTibio" class="h-full w-[0%] rounded-full bg-gradient-to-r from-[#92400e] to-[#fbbf24] transition-all duration-500"></div>
+                        </div>
+                    </article>
+
+                    <!-- Barra Caliente: sube cuando la diferencia es < 15 -->
+                    <article>
+                        <div class="mb-1 flex items-center justify-between text-sm">
+                            <span class="text-[#c8d7e8]">Caliente</span>
+                            <span id="valorCaliente" class="font-semibold text-[#ef4444]">0%</span>
+                        </div>
+                        <div class="h-2.5 rounded-full bg-slate-700/75">
+                            <div id="chartCaliente" class="h-full w-[0%] rounded-full bg-gradient-to-r from-[#991b1b] to-[#ef4444] transition-all duration-500"></div>
+                        </div>
+                    </article>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <!-- Script del juego: genera el numero secreto y contiene la funcion adivinar() -->
+    <script src="./js/frio.js"></script>
+
+</body>
+
+</html>

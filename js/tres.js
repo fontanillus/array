@@ -1,4 +1,10 @@
 // Guardamos los elementos del HTML que vamos a usar.
+
+// querySelectorAll(".casilla") busca TODOS los elementos con class="casilla" en el HTML
+// y los devuelve como una NodeList (lista de nodos), similar a un array.
+// Así obtenemos los 9 botones del tablero de una sola vez.
+// Diferencia clave con getElementById: ese solo devuelve UN elemento por su id,
+// mientras que querySelectorAll puede devolver VARIOS usando cualquier selector CSS.
 const casillas = document.querySelectorAll(".casilla");
 const mensaje = document.getElementById("mensaje");
 const botonReiniciar = document.getElementById("reiniciar");
